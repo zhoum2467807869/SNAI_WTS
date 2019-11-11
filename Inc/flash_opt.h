@@ -1,0 +1,76 @@
+﻿#ifndef _FLASH_OPT_H
+#define _FLASH_OPT_H
+#include "usart.h"
+#include "spi.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "main.h"
+
+#define  FLASH_STORE_TMPT_SIZE  1*(4096U)  //为每个配置分区暂未使用
+#define  FLASH_STORE_WIND_SIZE  1*(4096U)  //
+#define  FLASH_STORE_PA_SIZE    1*(4096U)  //
+#define  FLASH_STORE_COMM_SIZE  1*(4096U)  //
+#define  FLASH_STORE_ETC_SIZE   1*(4096U)  //
+
+#define  FLASH_STORE_CONFIG_TMPT_ADDR  (0x0U)
+#define  FLASH_STORE_CONFIG_WINDFAN_ADDR    FLASH_STORE_CONFIG_TMPT_ADDR+FLASH_STORE_TMPT_SIZE
+#define  FLASH_STORE_CONFIG_PA_ADDR         FLASH_STORE_CONFIG_WINDFAN_ADDR+FLASH_STORE_PA_SIZE
+#define  FLASH_STORE_CONFIG_COMMON_ADDR     FLASH_STORE_CONFIG_PA_ADDR+FLASH_STORE_COMM_SIZE
+#define  FLASH_STORE_CONFIG_ETC_ADDR     	FLASH_STORE_CONFIG_COMMON_ADDR+FLASH_STORE_ETC_SIZE
+
+#define W25Q16_PORT				GPIOB
+#define W25Q16_SCK_PIN			GPIO_Pin_13
+#define W25Q16_MISO_PIN			GPIO_Pin_14
+#define W25Q16_MOSI_PIN			GPIO_Pin_15
+#define W25Q16_SPI	       		SPI2
+
+/* W25Q16片选 */
+#define W25Q16_CS_LOW()       HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+#define W25Q16_CS_HIGH()      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
+
+#define SPI_FLASH_SECTOR_SIZE			   512//(4*1024U)
+#define SPI_FLASH_PageSize				   256          //页字节大小
+#define SPI_FLASH_PerWritePageSize         256          //每页字节大小
+#define SPI_FLASH_BLOCK_SIZE               512//(uint16_t)(64U*1024U)  //64K
+#define SPI_FLASH_SECTOR_COUNT   (uint32_t)((16*1024*1024)/SPI_FLASH_SECTOR_SIZE)
+/* W25X16 ID 0XEF14 */
+
+#define W25Q128_ID 0XEF17
+#define W25Q16_ID  0XEF14
+
+/* W25Q16指令	*/
+#define W25X_WriteEnable		0x06 
+#define W25X_WriteDisable		0x04 
+#define W25X_ReadStatusReg		0x05 
+#define W25X_WriteStatusReg		0x01 
+#define W25X_ReadData		    0x03 
+#define W25X_FastReadData		0x0B 
+#define W25X_FastReadDual		0x3B 
+#define W25X_PageProgram		0x02 
+#define W25X_BlockErase			0xD8 
+#define W25X_SectorErase		0x20 
+#define W25X_ChipErase			0xC7 
+#define W25X_PowerDown			0xB9 
+#define W25X_ReleasePowerDown	0xAB 
+#define W25X_DeviceID			0xAB 
+#define W25X_ManufactDeviceID	0x90 
+#define W25X_JedecDeviceID		0x9F 
+
+/* Private Function*/
+uint8_t W25Q16_Init(void);
+
+uint8_t SPI_Flash_ReadSR(void);
+uint8_t SPI_Flash_WriteSR(uint16_t data);
+void SPI_FLASH_Write_Enable(void);
+void SPI_Flash_Wait_Busy(void);
+uint16_t SPI_Flash_ReadID(void);
+void SPI_Flash_Read(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead);
+void SPI_Flash_Write_Page(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
+void SPI_Flash_Erase_Chip(void);
+void SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
+void SPI_FLASH_SectorErase(uint32_t SectorAddr);
+
+uint32_t w25qxx_getStoreNum(void);
+
+#endif
