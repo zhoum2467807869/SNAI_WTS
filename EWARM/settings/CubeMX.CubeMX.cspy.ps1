@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "C:\Users\47282\Desktop\CubeMX\EWARM\settings\CubeMX.CubeMX.general.xcl" --backend -f "C:\Users\47282\Desktop\CubeMX\EWARM\settings\CubeMX.CubeMX.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "G:\C_file\SNAI_C_FILE\CubeMX\EWARM\settings\CubeMX.CubeMX.general.xcl" --backend -f "G:\C_file\SNAI_C_FILE\CubeMX\EWARM\settings\CubeMX.CubeMX.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "C:\Users\47282\Desktop\CubeMX\EWARM\settings\CubeMX.CubeMX.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\47282\Desktop\CubeMX\EWARM\settings\CubeMX.CubeMX.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "G:\C_file\SNAI_C_FILE\CubeMX\EWARM\settings\CubeMX.CubeMX.general.xcl" --debug_file=$debugfile --backend -f "G:\C_file\SNAI_C_FILE\CubeMX\EWARM\settings\CubeMX.CubeMX.driver.xcl" 
 }

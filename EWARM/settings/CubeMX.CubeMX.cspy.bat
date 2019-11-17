@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "C:\Users\47282\Desktop\CubeMX\EWARM\settings\CubeMX.CubeMX.general.xcl" --backend -f "C:\Users\47282\Desktop\CubeMX\EWARM\settings\CubeMX.CubeMX.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "G:\C_file\SNAI_C_FILE\CubeMX\EWARM\settings\CubeMX.CubeMX.general.xcl" --backend -f "G:\C_file\SNAI_C_FILE\CubeMX\EWARM\settings\CubeMX.CubeMX.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "C:\Users\47282\Desktop\CubeMX\EWARM\settings\CubeMX.CubeMX.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\47282\Desktop\CubeMX\EWARM\settings\CubeMX.CubeMX.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "G:\C_file\SNAI_C_FILE\CubeMX\EWARM\settings\CubeMX.CubeMX.general.xcl" "--debug_file=%~1" --backend -f "G:\C_file\SNAI_C_FILE\CubeMX\EWARM\settings\CubeMX.CubeMX.driver.xcl" 
 
 @echo off 
 :end
