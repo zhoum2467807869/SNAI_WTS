@@ -149,11 +149,10 @@ DRESULT disk_write (
 {
  switch (pdrv) {
 	case SPI_FLASH :
-        
+        SPI_FLASH_SectorErase(sector*4096);/*写前擦除扇区首地址*/
 		for(;count>0;count--)
 		{
-            SPI_FLASH_SectorErase(sector*4096);/*写前擦除扇区首地址*/
-			SPI_FLASH_BufferWrite((uint8_t*)buff,sector*SPI_FLASH_SECTOR_SIZE,SPI_FLASH_SECTOR_SIZE);
+             SPI_FLASH_BufferWrite((uint8_t*)buff,sector*SPI_FLASH_SECTOR_SIZE,SPI_FLASH_SECTOR_SIZE);
 			sector++;
 			buff+=SPI_FLASH_SECTOR_SIZE;
 		}

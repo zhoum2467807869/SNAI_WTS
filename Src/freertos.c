@@ -34,6 +34,8 @@
 #include "rtc.h"
 #include "spi.h"
 #include "flash_opt.h"
+#include "ff.h"
+#include "fatfs.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +57,8 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
   SemaphoreHandle_t xSemaphore = NULL;      /* 互斥信号量句柄 */
-
+UINT br;
+char fat[6] ={ '1','2','3','4','5','6'};
 
 /* USER CODE END Variables */
 osThreadId IWDGHandle;
@@ -171,6 +174,15 @@ void Start_IWDG(void const * argument)
   /* init code for FATFS */
   MX_FATFS_Init();
   /* USER CODE BEGIN Start_IWDG */
+//  while(f_mount(&USERFatFS, "0:", 1));
+//  while( f_open(&USERFile, "0:123.txt", FA_OPEN_ALWAYS  | FA_WRITE));
+//  while(f_write(&USERFile, fat, 6, &br)); 
+//  f_close(&USERFile); 
+  
+//  f_mount(&USERFatFS, "0:", 1);
+//  f_open(&USERFile, "0:新建文本文档.txt", FA_OPEN_ALWAYS | FA_CREATE_NEW | FA_WRITE);
+//  f_write(&USERFile, fat, 6, &br); 
+//  f_close(&USERFile); 
   /* Infinite loop */
   for(;;)
   {

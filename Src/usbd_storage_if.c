@@ -206,7 +206,7 @@ int8_t STORAGE_GetCapacity_FS(uint8_t lun, uint32_t *block_num, uint16_t *block_
 int8_t STORAGE_IsReady_FS(uint8_t lun)
 {
   /* USER CODE BEGIN 4 */
-  W25Q16_Init();/*读取W25Q——ID*/
+  //W25Q16_Init();/*读取W25Q——ID，无需回重复进入*/
   return (USBD_OK);
   /* USER CODE END 4 */
 }
@@ -249,10 +249,24 @@ USB缓冲使用的是堆空间*/
 int8_t STORAGE_Write_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
   /* USER CODE BEGIN 7 */
-  if(!blk_len)
+//  uint32_t current_erase_addr = 0,old_erase_addr = 1;//先保持不同
+//  if(!blk_len)
+//      return 0;
+//  current_erase_addr = blk_addr/4096;
+//  if(current_erase_addr != old_erase_addr)
+//  {
+//    old_erase_addr = current_erase_addr;
+//    SPI_FLASH_SectorErase(current_erase_addr*4096);/*写前擦除扇区首地址*/
+//  }
+//  
+//  SPI_FLASH_BufferWrite((uint8_t*)buf,blk_addr*4096,blk_len*512);
+//  SPI_FLASH_BufferWrite((uint8_t*)buf,blk_addr*512,blk_len*512);//test，不行无法格式化
+/**************************原来的OK**************************/  
+    if(!blk_len)
       return 0;
-  SPI_FLASH_SectorErase(blk_addr*4096);/*写前擦除扇区首地址*/
-  SPI_FLASH_BufferWrite((uint8_t*)buf,blk_addr*4096,blk_len*512);
+  SPI_FLASH_SectorErase(blk_addr*4096);/*写前擦除扇区首地址,每次地址都不同所以不会覆盖之前的*/
+  SPI_FLASH_BufferWrite((uint8_t*)buf,blk_addr*4096,blk_len*512);//OK
+
   return (USBD_OK);
   /* USER CODE END 7 */
 }

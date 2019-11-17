@@ -224,7 +224,7 @@ void SPI_FLASH_Write_Enable(void) {
 //等待空闲
 void SPI_Flash_Wait_Busy(void) {
 	while ((SPI_Flash_ReadSR() & 0x01) == 0x01); //等待BUSY位清零
-    printf("IDEL\n");
+    //printf("IDEL\n");/*r调试用*/
 }
 
 uint8_t SPI_Flash_WriteSR(uint16_t data) {

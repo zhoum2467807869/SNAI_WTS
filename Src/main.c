@@ -54,8 +54,7 @@
 
 /* USER CODE BEGIN PV */
 
-UINT br;
-char fat[6] ={ '1','2','3','4','5','6'};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
