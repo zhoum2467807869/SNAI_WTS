@@ -1214,6 +1214,9 @@
                 <name>$PROJ_DIR$\..\Src\dma.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\Src\fatfs.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Src\flash_opt.c</name>
             </file>
             <file>
@@ -1275,6 +1278,12 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\usbd_storage_if.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\user_diskio.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\W25Qxx.c</name>
             </file>
         </group>
     </group>
@@ -1355,6 +1364,21 @@
     </group>
     <group>
         <name>Middlewares</name>
+        <group>
+            <name>FatFs</name>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FatFs\src\diskio.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FatFs\src\ff.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FatFs\src\ff_gen_drv.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FatFs\src\option\syscall.c</name>
+            </file>
+        </group>
         <group>
             <name>FreeRTOS</name>
             <file>

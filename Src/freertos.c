@@ -33,7 +33,8 @@
 #include "CircularQueue.h"
 #include "rtc.h"
 #include "spi.h"
-#include "flash_opt.h"
+//#include "flash_opt.h"
+#include "W25Qxx.h"
 #include "ff.h"
 #include "fatfs.h"
 /* USER CODE END Includes */

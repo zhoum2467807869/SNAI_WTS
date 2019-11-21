@@ -23,7 +23,8 @@
 #include "usbd_storage_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-#include "flash_opt.h"
+//#include "flash_opt.h"
+#include "W25Qxx.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -233,7 +234,13 @@ int8_t STORAGE_Read_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t bl
   /* USER CODE BEGIN 6 */
   if(!blk_len)
     return 0;
-  SPI_Flash_Read(buf,blk_addr*4096,blk_len*512);
+  //SPI_Flash_Read(buf,blk_addr*4096,blk_len*512);
+  
+/*以下测试代码*/  
+	for(;blk_len>0;blk_len--)
+	{
+		HAL_W25QXX_Read(buf,blk_addr*FLASH_SECTOR_SIZE,FLASH_SECTOR_SIZE);
+	}
 /*将FLASH当成512字节扇区进行读写的，原因是为了同时挂载SD卡（512）
 而堆空间STM32默认就是0x200，512字节
 USB缓冲使用的是堆空间*/
@@ -249,23 +256,21 @@ USB缓冲使用的是堆空间*/
 int8_t STORAGE_Write_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
   /* USER CODE BEGIN 7 */
-//  uint32_t current_erase_addr = 0,old_erase_addr = 1;//先保持不同
-//  if(!blk_len)
-//      return 0;
-//  current_erase_addr = blk_addr/4096;
-//  if(current_erase_addr != old_erase_addr)
-//  {
-//    old_erase_addr = current_erase_addr;
-//    SPI_FLASH_SectorErase(current_erase_addr*4096);/*写前擦除扇区首地址*/
-//  }
-//  
-//  SPI_FLASH_BufferWrite((uint8_t*)buf,blk_addr*4096,blk_len*512);
-//  SPI_FLASH_BufferWrite((uint8_t*)buf,blk_addr*512,blk_len*512);//test，不行无法格式化
-/**************************原来的OK**************************/  
+
     if(!blk_len)
       return 0;
-  SPI_FLASH_SectorErase(blk_addr*4096);/*写前擦除扇区首地址,每次地址都不同所以不会覆盖之前的*/
-  SPI_FLASH_BufferWrite((uint8_t*)buf,blk_addr*4096,blk_len*512);//OK
+    	for(;blk_len>0;blk_len--)
+	{
+        HAL_W25QXX_Write(buf,blk_addr*FLASH_SECTOR_SIZE,FLASH_SECTOR_SIZE);
+	}
+    
+/*以下，可以格式化，但是写入大数据重上电会读不出来*/
+//        if(((blk_addr*4096) % 4096) == 0 || blk_addr == 0)
+//        {
+//          SPI_FLASH_SectorErase(blk_addr*4096);
+//        }    
+//  SPI_FLASH_SectorErase(blk_addr*4096);/*写前擦除扇区首地址,每次地址都不同所以不会覆盖之前的*/
+//  SPI_FLASH_BufferWrite((uint8_t*)buf,blk_addr*4096,blk_len*512);//OK
 
   return (USBD_OK);
   /* USER CODE END 7 */

@@ -58,7 +58,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "diskio.h"
 #include "ff_gen_drv.h"
-#include "flash_opt.h"
+//#include "flash_opt.h"
+#include "W25Qxx.h"
 #include "rtc.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -78,10 +79,10 @@ DSTATUS disk_status (
 	BYTE pdrv		/* Physical drive nmuber to identify the drive */
 )
 {
- switch (pdrv) {
-		case SPI_FLASH :return RES_OK;
-	}
- return STA_NOINIT;
+  DSTATUS stat;
+  
+  stat = 0;
+  return stat;
 }
 
 /**
@@ -94,12 +95,7 @@ DSTATUS disk_initialize (
 )
 {
   DSTATUS stat = RES_OK;
-  
-  if(disk.is_initialized[pdrv] == 0)
-  { 
-    disk.is_initialized[pdrv] = 1;
-    stat = disk.drv[pdrv]->disk_initialize(disk.lun[pdrv]);
-  }
+
   return stat;
 }
 
@@ -118,17 +114,22 @@ DRESULT disk_read (
 	UINT count		/* Number of sectors to read */
 )
 {
-	switch (pdrv) {
-	case SPI_FLASH :
-		for(;count>0;count--)
-		{
-			SPI_Flash_Read(buff,sector*SPI_FLASH_SECTOR_SIZE,SPI_FLASH_SECTOR_SIZE);
-			sector++;
-			buff+=SPI_FLASH_SECTOR_SIZE;
-		}
-		return RES_OK;
+  BYTE tmp;
+	
+	if (!count) return RES_PARERR;
+
+	for(;count>0;count--)
+	{
+		tmp=HAL_W25QXX_Read(buff,sector*FLASH_SECTOR_SIZE,FLASH_SECTOR_SIZE);
+		sector++;
+		buff+=FLASH_SECTOR_SIZE;
 	}
-	return RES_PARERR;
+
+	buff-=FLASH_SECTOR_SIZE;
+	if(tmp==0)
+		return RES_OK;
+	else
+		return RES_ERROR;
 }
 
 /**
@@ -147,18 +148,21 @@ DRESULT disk_write (
 	UINT count        	/* Number of sectors to write */
 )
 {
- switch (pdrv) {
-	case SPI_FLASH :
-        SPI_FLASH_SectorErase(sector*4096);/*写前擦除扇区首地址*/
-		for(;count>0;count--)
-		{
-             SPI_FLASH_BufferWrite((uint8_t*)buff,sector*SPI_FLASH_SECTOR_SIZE,SPI_FLASH_SECTOR_SIZE);
-			sector++;
-			buff+=SPI_FLASH_SECTOR_SIZE;
-		}
-		return RES_OK;
+	BYTE tmp;
+
+  if (!count) return RES_PARERR;
+
+	for(;count>0;count--)
+	{
+		tmp = HAL_W25QXX_Write((uint8_t*)buff,sector*FLASH_SECTOR_SIZE,FLASH_SECTOR_SIZE);
+		sector++;
+		buff+=FLASH_SECTOR_SIZE;
 	}
-	return RES_PARERR;
+
+	if(tmp==0)
+		return RES_OK;
+	else
+		return RES_ERROR;
 }
 #endif /* _USE_WRITE == 1 */
 
@@ -185,15 +189,15 @@ DRESULT disk_ioctl (
 				res = RES_OK; 
 		        break;	 
 		    case GET_SECTOR_SIZE:
-		        *(WORD*)buff = SPI_FLASH_SECTOR_SIZE;
+		        *(WORD*)buff = FLASH_SECTOR_SIZE;
 		        res = RES_OK;
 		        break;	 
 		    case GET_BLOCK_SIZE:
-		        *(WORD*)buff = SPI_FLASH_BLOCK_SIZE;
+		        *(WORD*)buff = FLASH_BLOCK_SIZE;
 		        res = RES_OK;
 		        break;	 
 		    case GET_SECTOR_COUNT:
-		        *(DWORD*)buff = SPI_FLASH_SECTOR_COUNT;
+		        *(DWORD*)buff = FLASH_SECTOR_COUNT;
 		        res = RES_OK;
 		        break;
 		    default:

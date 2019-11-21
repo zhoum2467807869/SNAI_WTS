@@ -33,7 +33,8 @@
 
 /* USER CODE BEGIN DECL */
 
-#include "flash_opt.h"
+//#include "flash_opt.h"
+#include "W25Qxx.h"
 /* Includes ------------------------------------------------------------------*/
 #include <string.h>
 #include "ff_gen_drv.h"
@@ -83,21 +84,21 @@ DSTATUS USER_initialize (
 )
 {
   /* USER CODE BEGIN INIT */
-    uint8_t result;
-    Stat = STA_NOINIT;
-	if(pdrv)
-	{
-      return Stat;
-    }
-	result = W25Q16_Init();/*¶ÁÈ¡W25Q¡ª¡ªID*/
-	if(result==0)
-	{
+//    uint8_t result;
+//    Stat = STA_NOINIT;
+//	if(pdrv)
+//	{
+//      return Stat;
+//    }
+//	result = W25Q16_Init();/*¶ÁÈ¡W25Q¡ª¡ªID*/
+//	if(result==0)
+//	{
       return RES_OK;
-    }
-	else
-	{
-      return Stat;
-    }
+//    }
+//	else
+//	{
+//      return Stat;
+//    }
   /* USER CODE END INIT */
 }
  
@@ -132,23 +133,23 @@ DRESULT USER_read (
 )
 {
   /* USER CODE BEGIN READ */
-  	//BYTE tmp;
+	BYTE tmp;
 	
 	if (!count) return RES_PARERR;
 
 	for(;count>0;count--)
 	{
-		//tmp = SPI_Flash_Read(buff,sector*SPI_FLASH_SECTOR_SIZE, SPI_FLASH_SECTOR_SIZE);
-        SPI_Flash_Read(buff,sector*SPI_FLASH_SECTOR_SIZE, SPI_FLASH_SECTOR_SIZE);
+		tmp = HAL_W25QXX_Read(buff,sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
+//		HAL_Delay(5);
 		sector++;
-		buff+=SPI_FLASH_SECTOR_SIZE;
+		buff+=FLASH_SECTOR_SIZE;
 	}
-	buff-=SPI_FLASH_SECTOR_SIZE;
-    return RES_OK;
-//	if(tmp==0)
-//		return RES_OK;
-//	else
-//		return RES_ERROR;
+
+	buff-=FLASH_SECTOR_SIZE;
+	if(tmp==0)
+		return RES_OK;
+	else
+		return RES_ERROR;
   /* USER CODE END READ */
 }
 
@@ -170,22 +171,22 @@ DRESULT USER_write (
 { 
   /* USER CODE BEGIN WRITE */
   /* USER CODE HERE */
-  //BYTE tmp;
+  	BYTE tmp;
+//	uint8_t Reardata[FLASH_SECTOR_SIZE];
+	
   if (!count) return RES_PARERR;
-    
+
 	for(;count>0;count--)
 	{
-        SPI_FLASH_SectorErase(sector*4096);
-		//tmp = SPI_FLASH_BufferWrite((uint8_t*)buff,sector*SPI_FLASH_SECTOR_SIZE,SPI_FLASH_SECTOR_SIZE);
-        SPI_FLASH_BufferWrite((uint8_t*)buff,sector*SPI_FLASH_SECTOR_SIZE,SPI_FLASH_SECTOR_SIZE);
+		tmp = HAL_W25QXX_Write((uint8_t*)buff,sector*FLASH_SECTOR_SIZE,FLASH_SECTOR_SIZE);
 		sector++;
-		buff+=SPI_FLASH_SECTOR_SIZE;
+		buff+=FLASH_SECTOR_SIZE;
 	}
-	return RES_OK;
-//	if(tmp==0)
-//		return RES_OK;
-//	else
-//		return RES_ERROR;
+	
+	if(tmp==0)
+		return RES_OK;
+	else
+		return RES_ERROR;
   /* USER CODE END WRITE */
 }
 #endif /* _USE_WRITE == 1 */
@@ -212,15 +213,15 @@ DRESULT USER_ioctl (
 				res = RES_OK;
 				break;
 		case GET_SECTOR_SIZE:
-				*(WORD*)buff = SPI_FLASH_SECTOR_SIZE;
+				*(WORD*)buff = FLASH_SECTOR_SIZE;
 				res = RES_OK;
 				break;
 		case GET_BLOCK_SIZE:
-				*(WORD*)buff = SPI_FLASH_BLOCK_SIZE;
+				*(WORD*)buff = FLASH_BLOCK_SIZE;
 				res = RES_OK;
 				break;
 		case GET_SECTOR_COUNT:
-				*(DWORD*)buff = SPI_FLASH_SECTOR_COUNT;
+				*(DWORD*)buff = FLASH_SECTOR_COUNT;
 				res = RES_OK;
 				break;
 		default:

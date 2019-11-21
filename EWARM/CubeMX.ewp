@@ -1090,6 +1090,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\flash_opt.c</name>
+                <excluded>
+                    <configuration>CubeMX</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\freertos.c</name>
@@ -1159,6 +1162,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\user_diskio.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\W25Qxx.c</name>
             </file>
         </group>
     </group>

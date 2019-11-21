@@ -4,4 +4,28 @@
         <path>G:\C_file\CubeMX\Src\flash_opt.c</path>
         <encoding>GB2312</encoding>
     </override>
+    <override>
+        <path>G:\C_file\SNAI_C_FILE\CubeMX\Middlewares\Third_Party\FatFs\src\diskio.c</path>
+        <encoding>System</encoding>
+    </override>
+    <override>
+        <path>G:\C_file\SNAI_C_FILE\CubeMX\Src\W25Qxx.c</path>
+        <encoding>System</encoding>
+    </override>
+    <override>
+        <path>G:\C_file\SNAI_C_FILE\CubeMX\Src\flash_opt.c</path>
+        <encoding>System</encoding>
+    </override>
+    <override>
+        <path>G:\C_file\SNAI_C_FILE\CubeMX\Src\freertos.c</path>
+        <encoding>System</encoding>
+    </override>
+    <override>
+        <path>G:\C_file\SNAI_C_FILE\CubeMX\Src\main.c</path>
+        <encoding>System</encoding>
+    </override>
+    <override>
+        <path>G:\C_file\SNAI_C_FILE\CubeMX\Src\usbd_storage_if.c</path>
+        <encoding>System</encoding>
+    </override>
 </userOverrides>
