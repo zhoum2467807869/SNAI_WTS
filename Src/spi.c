@@ -21,7 +21,8 @@
 #include "spi.h"
 
 /* USER CODE BEGIN 0 */
-
+//extern SPI_HandleTypeDef hspi1;
+//extern SPI_HandleTypeDef hspi2;
 /* USER CODE END 0 */
 
 SPI_HandleTypeDef hspi2;
@@ -113,7 +114,34 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 } 
 
 /* USER CODE BEGIN 1 */
-
+//单字节发送SPI lcd用9341
+//void SPI_send_byte(uint8_t data)
+//{
+//    //HAL_SPI_Transmit(&hspi1, &data, 1, 200);
+//    HAL_SPI_Transmit_DMA(&hspi1, &data, 1);
+//}
+////SPI是否准备好
+//uint8_t SPI_is_ready()
+//{
+//    return (HAL_SPI_STATE_READY == HAL_SPI_GetState(&hspi1));
+//}
+////SPI的DMA发送
+//void SPI_DMA_send(uint8_t *pData, uint16_t length)
+//{
+//    HAL_SPI_Transmit_DMA(&hspi1, pData, length);
+//}
+////多字节阻塞发送
+//void SPI_send_byte_x(uint8_t *pData,uint8_t len)
+//{
+//    for(int i = 0; i < len ;i++)
+//    {
+//        LCD_CS_clr();
+//        LCD_DC_set();//输出1--写数据
+//        //HAL_SPI_Transmit(&hspi1,(uint8_t *)pData++, 1, 100);
+//        HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)pData++, 1);
+//        LCD_CS_set();
+//    }
+//}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

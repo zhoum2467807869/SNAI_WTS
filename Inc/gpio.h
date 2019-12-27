@@ -38,7 +38,12 @@
 void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+//void LCD_CS_set();
+//void LCD_CS_clr();
+//void LCD_DC_set();
+//void LCD_DC_clr();
+//void LCD_RES_set();
+//void LCD_RES_clr();
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

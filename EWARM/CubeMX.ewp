@@ -1104,6 +1104,12 @@
                 <name>$PROJ_DIR$\..\Src\iwdg.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\Src\LCD_9341_240_320.c</name>
+                <excluded>
+                    <configuration>CubeMX</configuration>
+                </excluded>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Src\main.c</name>
             </file>
             <file>

@@ -953,7 +953,7 @@
                     <item>UART2_BUFF</item>
                     <item>screen_rx_buff</item>
                     <item>CMD_SCREEN</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
@@ -1041,7 +1041,7 @@
                 <expressions>
                     <item>screen_rx_buff</item>
                     <item>hdma_usart2_rx</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
