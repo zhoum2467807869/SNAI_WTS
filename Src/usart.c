@@ -495,7 +495,7 @@ void USAR_UART_IDLECallback(UART_HandleTypeDef *huart)
 
 void USER_UART2_IRQHandler(UART_HandleTypeDef *huart)
 {
-    if(USART2 == huart2.Instance)                                   /*判断是否是串口2*/
+    if(USART2 == huart.Instance)                                   /*判断是否是串口2*/
     {
         screen_SLEEP_MODE = 0;
         /*if((__HAL_UART_GET_FLAG(&huart2,UART_FLAG_RXNE)!=RESET))//判断是否是接收中断
@@ -534,7 +534,7 @@ void USER_UART2_IRQHandler(UART_HandleTypeDef *huart)
 
 void USER_UART1_IRQHandler(UART_HandleTypeDef *huart)
 {
-  if(USART1 == huart1.Instance)/*cc1310数据处理*/
+  if(USART1 == huart.Instance)/*cc1310数据处理*/
       {
           if((__HAL_UART_GET_FLAG(&huart1 , UART_FLAG_IDLE) != RESET))
           {
