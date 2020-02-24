@@ -1,6 +1,16 @@
+/*
+ *  FILE: cc1310_com.c
+ *
+ *  Created on: 2020/2/24
+ *
+ *         Author: aron66
+ *
+ *  DESCRIPTION:--
+ */
+#ifdef __cplusplus //use C compiler
+extern "C" {
+#endif
 #include "cc1310_com.h"
-
-
 uint8_t CC1310_RX_BUF[CC1310_RX_BUF_MAX] = {0};
 uint8_t CC1310_TX_BUF[CC1310_TX_BUF_MAX] = {0xFF,DEVICE_TYPE,0x06,0x00,0x00,0x00};
 SensorTab_t SensorTab[SENSOR_NUM];//传感器最大支持50个传感器数据存储，以信号质量分0-12高质量区域，13-24中等信号区域，剩余弱信号区域
@@ -96,4 +106,7 @@ int CC1310_Main_Com(uint8_t data)
     CC1310_TX_BUF[5] = cc1310_crc_L;
     HAL_UART_Transmit_DMA(&huart1,(uint8_t*)CC1310_TX_BUF,6);
     return 0;
+}    
+#ifdef __cplusplus //end extern c
 }
+#endif

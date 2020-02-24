@@ -17,6 +17,10 @@
         <encoding>System</encoding>
     </override>
     <override>
+        <path>G:\C_file\SNAI_C_FILE\CubeMX\Src\cc1310_com.c</path>
+        <encoding>System</encoding>
+    </override>
+    <override>
         <path>G:\C_file\SNAI_C_FILE\CubeMX\Src\flash_opt.c</path>
         <encoding>System</encoding>
     </override>
